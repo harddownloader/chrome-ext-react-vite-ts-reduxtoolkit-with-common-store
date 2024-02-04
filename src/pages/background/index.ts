@@ -1,5 +1,7 @@
 import reloadOnUpdate from 'virtual:reload-on-update-in-background-script';
 import 'webextension-polyfill';
+import { wrapStore } from 'webext-redux';
+import store from './../../shared/store/store';
 
 reloadOnUpdate('pages/background');
 
@@ -9,4 +11,11 @@ reloadOnUpdate('pages/background');
  */
 reloadOnUpdate('pages/content/style.scss');
 
+wrapStore(store);
+
 console.log('background loaded');
+console.log('state', store.getState());
+
+setInterval(() => {
+  console.log('setInterval state', store.getState());
+}, 3000);

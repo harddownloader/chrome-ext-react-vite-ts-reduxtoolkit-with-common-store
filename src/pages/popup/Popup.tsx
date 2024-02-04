@@ -6,8 +6,14 @@ import exampleThemeStorage from '@src/shared/storages/exampleThemeStorage';
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { decrement, increment, selectCount } from '@src/shared/store/counterSlice';
+
 const Popup = () => {
   const theme = useStorage(exampleThemeStorage);
+
+  const count = useSelector(selectCount);
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -16,6 +22,14 @@ const Popup = () => {
         backgroundColor: theme === 'light' ? '#fff' : '#000',
       }}>
       <header className="App-header" style={{ color: theme === 'light' ? '#000' : '#fff' }}>
+        <button aria-label="Increment value" onClick={() => dispatch(increment())}>
+          Increment
+        </button>
+        <span>{count}</span>
+        <button aria-label="Decrement value" onClick={() => dispatch(decrement())}>
+          Decrement
+        </button>
+
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/pages/popup/Popup.tsx</code> and save to reload.
